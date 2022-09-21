@@ -1,7 +1,12 @@
 import React from "react";
+import Main from "../components/Main";
 
 function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Main />
+    </div>
+  );
 }
 
 export default Home;
