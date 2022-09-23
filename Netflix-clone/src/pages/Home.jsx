@@ -8,15 +8,23 @@ function Home() {
   return (
     <>
       <Main />
-      <Row title="UpComing" fetchData={requests.requestUpcoming} />
-      <Row title="Popular" fetchData={requests.requestPopular} />
-      <Row title="Top Rated" fetchData={requests.requestTopRated} />
-      <Row title="Trending" fetchData={requests.requestTrending} />
-      <Row title="Action" fetchData={requests.requestActionMovies} />
-      <Row title="Comedy" fetchData={requests.requestComedyMovies} />
-      <Row title="Romance" fetchData={requests.requestRomanceMovies} />
-      <Row title="Horror" fetchData={requests.requestHorror} />
-      <Row title="Documentaries" fetchData={requests.requestDocumentaries} />
+      <Row rowID="1" title="UpComing" fetchData={requests.requestUpcoming} />
+      <Row rowID="2" title="Popular" fetchData={requests.requestPopular} />
+      <Row rowID="3" title="Top Rated" fetchData={requests.requestTopRated} />
+      <Row rowID="4" title="Trending" fetchData={requests.requestTrending} />
+      <Row rowID="5" title="Action" fetchData={requests.requestActionMovies} />
+      <Row rowID="6" title="Comedy" fetchData={requests.requestComedyMovies} />
+      <Row
+        rowID="7"
+        title="Romance"
+        fetchData={requests.requestRomanceMovies}
+      />
+      <Row rowID="8" title="Horror" fetchData={requests.requestHorror} />
+      <Row
+        rowID="9"
+        title="Documentaries"
+        fetchData={requests.requestDocumentaries}
+      />
     </>
   );
 }
