@@ -7,10 +7,12 @@ import Home from "./pages/Home";
 function App() {
   return (
     <>
+      {/* <AuthContextProvider> */}
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
       </Routes>
+      {/* </AuthContextProvider> */}
     </>
   );
 }
