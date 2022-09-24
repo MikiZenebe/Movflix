@@ -33,9 +33,7 @@ function Row({ title, fetchData, rowID }) {
         .then((url) => {
           //https://www.youtube.com/watch?v=XtMThy8QKqU
           const urlParams = new URLSearchParams(new URL(url).search);
-          const bitch = urlParams.get("v");
-
-          console.log(bitch);
+          setTrailerUrl(urlParams.get("v"));
         })
         .catch((error) => console.log(error));
     }
@@ -66,15 +64,17 @@ function Row({ title, fetchData, rowID }) {
           {movies.map((movie) => (
             <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
               <img
-                onClick={() => handleClick(movie)}
                 key={movie.id}
-                className="w-full h-auto block"
+                className="w-full h-auto block cursor-pointer"
                 src={`http://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
                 alt={movie?.title}
               />
 
               <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white">
-                <p className="white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center">
+                <p
+                  className="white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center"
+                  onClick={() => handleClick(movie)}
+                >
                   {movie?.title}
                 </p>
 
