@@ -2,16 +2,44 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import YouTube from "react-youtube";
+import movieTrailer from "movie-trailer";
 
 function Row({ title, fetchData, rowID }) {
   const [movies, setMovies] = useState([]);
   const [likes, setLikes] = useState(false);
+  const [trailerUrl, setTrailerUrl] = useState("");
 
   useEffect(() => {
     axios.get(fetchData).then((res) => {
       setMovies(res.data.results);
     });
   }, [fetchData]);
+
+  const opts = {
+    height: "390",
+    width: "100%",
+    playerVars: {
+      //https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
+
+  const handleClick = (movie) => {
+    if (trailerUrl) {
+      setTrailerUrl("");
+    } else {
+      movieTrailer(movie?.title || movie?.name || movie?.original_name)
+        .then((url) => {
+          //https://www.youtube.com/watch?v=XtMThy8QKqU
+          const urlParams = new URLSearchParams(new URL(url).search);
+          const bitch = urlParams.get("v");
+
+          console.log(bitch);
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   //Make a left and right slider
   const slideLeft = () => {
@@ -38,6 +66,8 @@ function Row({ title, fetchData, rowID }) {
           {movies.map((movie) => (
             <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
               <img
+                onClick={() => handleClick(movie)}
+                key={movie.id}
                 className="w-full h-auto block"
                 src={`http://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
                 alt={movie?.title}
@@ -62,6 +92,7 @@ function Row({ title, fetchData, rowID }) {
           className="bg-white right-0 rounded-full  absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"
         />
       </div>
+      <div>{trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}</div>
     </>
   );
 }

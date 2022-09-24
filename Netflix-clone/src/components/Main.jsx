@@ -37,7 +37,7 @@ function Main() {
         <div className="absolute w-full top-[20%] p-4 md:p-8">
           <h1 className="text-3xl md:text-5xl font-bold">{movie?.title}</h1>
           <div className="my-4">
-            <button className="border border-yellow-300 py-2 px-5 bg-yellow-300 text-black ">
+            <button className=" border border-yellow-300 py-2 px-5 bg-yellow-300 text-black ">
               Play
             </button>
             <button className="border border-yellow-300 px-5 py-2 ml-4">
