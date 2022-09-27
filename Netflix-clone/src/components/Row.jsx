@@ -87,7 +87,7 @@ function Row({ title, fetchData, rowID }) {
           id={"slider" + rowID}
           className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
         >
-          {movies.map((item, id) => (
+          {movies.map((item) => (
             <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
               <img
                 className="w-full h-auto block"
@@ -104,9 +104,9 @@ function Row({ title, fetchData, rowID }) {
                 </p>
                 <p onClick={() => saveShow(item)}>
                   {like ? (
-                    <FaHeart className="absolute top-4 left-4 text-gray-300" />
+                    <FaHeart className="absolute top-4 left-4 text-yellow-300" />
                   ) : (
-                    <FaRegHeart className="absolute top-4 left-4 text-gray-300" />
+                    <FaRegHeart className="absolute top-4 left-4 text-yellow-300" />
                   )}
                 </p>
               </div>
