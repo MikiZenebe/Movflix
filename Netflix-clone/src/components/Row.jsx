@@ -87,8 +87,11 @@ function Row({ title, fetchData, rowID }) {
           id={"slider" + rowID}
           className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
         >
-          {movies.map((item) => (
-            <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
+          {movies.map((item, id) => (
+            <div
+              key={id}
+              className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2"
+            >
               <img
                 className="w-full h-auto block"
                 src={`https://image.tmdb.org/t/p/w500/${item?.backdrop_path}`}

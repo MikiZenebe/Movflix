@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import "./Nav.css";
 
 function Navbar() {
   const { user, logOut } = UserAuth();
   const navigate = useNavigate();
+  const [show, handleshow] = useState(false);
 
   //Logout logic
   const handleLogout = async () => {
@@ -16,8 +18,22 @@ function Navbar() {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        handleshow(true);
+      } else handleshow(false);
+    });
+    return () => {
+      window.removeEventListener("scroll");
+    };
+  }, []);
   return (
-    <div className="flex justify-between p-4 z-[100] absolute w-full">
+    <div
+      className={`nav flex justify-between p-4 z-[100] absolute w-full ${
+        show && "nav_black"
+      }`}
+    >
       <Link to="/">
         <h1 className="text-yellow-300 text-4xl font-bold cursor-pointer">
           MOVFLIX

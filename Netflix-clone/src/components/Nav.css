@@ -1,0 +1,12 @@
+.nav {
+
+    position: fixed;
+    /* Animation */
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+
+}
+
+.nav_black {
+    background-color: #111111;
+}
