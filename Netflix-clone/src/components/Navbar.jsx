@@ -36,7 +36,7 @@ function Navbar() {
     >
       <Link to="/">
         <h1 className="text-yellow-300 text-4xl font-bold cursor-pointer">
-          MOVFLIX
+          MIKFLIX
         </h1>
       </Link>
 
