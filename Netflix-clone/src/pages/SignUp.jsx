@@ -51,7 +51,7 @@ function SignUp() {
                 <input
                   className="p-3 my-2 bg-gray-700 rounded outline-none"
                   type="password"
-                  placeholder="Password"
+                  placeholder="Password (min 6 char)"
                   autoComplete="current-password"
                   onChange={(e) => setPassword(e.target.value)}
                 />

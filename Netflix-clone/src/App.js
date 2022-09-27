@@ -7,6 +7,7 @@ import LogIn from "./pages/LogIn";
 import { AuthContextProvider } from "./context/AuthContext";
 import SignUp from "./pages/SignUp";
 import Account from "./pages/Account";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
@@ -14,10 +15,12 @@ function App() {
       <AuthContextProvider>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route element={<Home />} path="/" exact />
           <Route exact path="/login" element={<LogIn />} />
           <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/account" element={<Account />} />
+          <Route element={<PrivateRoute />}>
+            <Route element={<Account />} path="/account" exact />
+          </Route>
         </Routes>
       </AuthContextProvider>
     </>

@@ -14,12 +14,13 @@ function LogIn() {
 
   const handleLogIn = async (e) => {
     e.preventDefault();
-
+    setError("");
     try {
       await logIn(email, password);
       navigate("/");
     } catch (err) {
       console.log(err);
+      setError(err.message);
     }
   };
 
@@ -38,6 +39,11 @@ function LogIn() {
           <div className="max-w-[450px] h-[600px] mx-auto bg-black/75 text-white">
             <div className="max-w-[320px] mx-auto py-16">
               <h1 className="text-3xl font-bold">Sign In</h1>
+              {error ? (
+                <p className="p-3 bg-red-400 my-2">
+                  Check your email & password"
+                </p>
+              ) : null}
 
               <form
                 onSubmit={handleLogIn}
