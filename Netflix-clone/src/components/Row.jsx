@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import YouTube from "react-youtube";
+import { UserAuth } from "../context/AuthContext";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import movieTrailer from "movie-trailer";
+import YouTube from "react-youtube";
+
+import { db } from "../firebase";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 function Row({ title, fetchData, rowID }) {
   const [movies, setMovies] = useState([]);
-  const [likes, setLikes] = useState(false);
+  const [like, setLike] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState("");
+
+  const { user } = UserAuth();
+
+  const movieID = doc(db, "users", `${user?.email}`);
 
   useEffect(() => {
     axios.get(fetchData).then((res) => {
@@ -25,17 +34,34 @@ function Row({ title, fetchData, rowID }) {
     },
   };
 
-  const handleClick = (movie) => {
+  const handleClick = (item) => {
+    console.log("Miki");
     if (trailerUrl) {
       setTrailerUrl("");
     } else {
-      movieTrailer(movie?.title || movie?.name || movie?.original_name)
+      movieTrailer(item?.title || item?.name || item?.original_name)
         .then((url) => {
           //https://www.youtube.com/watch?v=XtMThy8QKqU
           const urlParams = new URLSearchParams(new URL(url).search);
           setTrailerUrl(urlParams.get("v"));
         })
         .catch((error) => console.log(error));
+    }
+  };
+
+  const saveShow = async (item) => {
+    if (user?.email) {
+      setLike(!like);
+      setSaved(true);
+      await updateDoc(movieID, {
+        savedShows: arrayUnion({
+          id: item.id,
+          title: item.title,
+          img: item.backdrop_path,
+        }),
+      });
+    } else {
+      alert("Please log in to save a movie");
     }
   };
 
@@ -61,25 +87,27 @@ function Row({ title, fetchData, rowID }) {
           id={"slider" + rowID}
           className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
         >
-          {movies.map((movie) => (
+          {movies.map((item, id) => (
             <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
               <img
-                key={movie.id}
-                className="w-full h-auto block cursor-pointer"
-                src={`http://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
-                alt={movie?.title}
+                className="w-full h-auto block"
+                src={`https://image.tmdb.org/t/p/w500/${item?.backdrop_path}`}
+                alt={item?.title}
               />
 
               <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white">
                 <p
+                  onClick={() => handleClick(item)}
                   className="white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center"
-                  onClick={() => handleClick(movie)}
                 >
-                  {movie?.title}
+                  {item?.title}
                 </p>
-
-                <p className="absolute top-4 left-4 text-yellow-300">
-                  {likes ? <FaHeart /> : <FaRegHeart />}
+                <p onClick={() => saveShow(item)}>
+                  {like ? (
+                    <FaHeart className="absolute top-4 left-4 text-gray-300" />
+                  ) : (
+                    <FaRegHeart className="absolute top-4 left-4 text-gray-300" />
+                  )}
                 </p>
               </div>
             </div>
