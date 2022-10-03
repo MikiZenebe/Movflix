@@ -1,4 +1,4 @@
-const API = "7df0012a83107f367e7d00f3973c72c2";
+const API = "";
 
 const requests = {
   requestUpcoming: `https://api.themoviedb.org/3/movie/upcoming?api_key=${API}&language=en-US&page=1`,
